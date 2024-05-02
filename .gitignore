@@ -1,3 +1,5 @@
 /env
 /sec
 setenv.sh
+/2-huggingface/quick-tour/2-autoclass/pt_save_pretrained
+/2-huggingface/quick-tour/2-autoclass/tf_save_pretrained
