@@ -8,12 +8,12 @@ This frameworks, tools and models are used:
 
 - Langchain framework
 - DeepLake vector datastore
-- Local OLlama/Orca/Phi3 models
-- HuggingFace models
+- Local Ollama/Orca/Phi3 models
+- HuggingFace LLM, sentiment and speech recognition models
 
-Ensure to have about 50Gb free for models
+Ensure to have about 50Gb free for HuggingFace and Ollama model downloads
 
-## Install
+## Environment install
 
 - Create and activate conda environment (optional)
 
@@ -28,27 +28,26 @@ Ensure to have about 50Gb free for models
 
     `environment-and-requirements/install-huggingface-requirements.sh`
 
-## Platform Links
+## Courses
 
-[HuggingFace Quick Tour](https://huggingface.co/docs/transformers/quicktour)
+- [ActiveLoop LangChain & Vector Databases in Production](https://learn.activeloop.ai/courses/langchain)
 
-[ActiveLoop LangChain & Vector Databases in Production](https://learn.activeloop.ai/courses/langchain)
 
-[OpenAI Platform API](https://platform.openai.com)
+## Platforms
 
-[ActiveLoop DataLake](https://app.activeloop.ai)
+- [HuggingFace Quick Tour](https://huggingface.co/docs/transformers/quicktour)
 
-## Tutorials and documentation
+- [OpenAI Platform API](https://platform.openai.com)
 
-Tutorials and quick intros used
+- [ActiveLoop DataLake](https://app.activeloop.ai)
 
-### LangChain tutorials
+## LangChain tutorials
 
 - [DataCamp](https://www.datacamp.com/tutorial/how-to-build-llm-applications-with-langchain)
 
 - [Langchain Docs](https://python.langchain.com/)
 
-## Tools
+## Models
 
 - [OLlama](https://ollama.com/download)
 
