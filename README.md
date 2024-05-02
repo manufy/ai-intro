@@ -11,6 +11,8 @@ This frameworks, tools and models are used:
 - Local OLlama/Orca/Phi3 models
 - HuggingFace models
 
+Ensure to have about 50Gb free for models
+
 ## Install
 
 - Create and activate conda environment (optional)
