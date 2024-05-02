@@ -15,16 +15,16 @@ This frameworks, tools and models are used:
 
 - Create and activate conda environment (optional)
 
-    'environment-and-requirements/create-conda-env.sh
-    environment-and-requirements/activate-conda-env.sh'
+    `environment-and-requirements/create-conda-env.sh
+    environment-and-requirements/activate-conda-env.sh`
 
 - Install ActiveLoop dependencies
     
-    environment-and-requirements/install-activeloop-requirements.sh
+    `environment-and-requirements/install-activeloop-requirements.sh`
 
 - Instal HuggingFace dependencies
 
-    environment-and-requirements/install-huggingface-requirements.sh
+    `environment-and-requirements/install-huggingface-requirements.sh`
 
 
 
