@@ -23,5 +23,7 @@ tf_outputs = tf_model(tf_batch)
 
 # The model outputs the final activations in the logits attribute. Apply the softmax function to the logits to retrieve the probabilities:
 
-tf_predictions = tf.functional.softmax(tf_outputs.logits, dim=-1)
+# huggingface says this, but it should bt tf.nn tf_predictions = tf.nn.softmax(tf_outputs.logits, dim=-1)
+
+tf_predictions = tf.nn.softmax(tf_outputs.logits, axis=-1)
 print(tf_predictions)
