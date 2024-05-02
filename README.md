@@ -26,7 +26,27 @@ This frameworks, tools and models are used:
 
     `environment-and-requirements/install-huggingface-requirements.sh`
 
+## Platform Links
 
+[HuggingFace Quick Tour](https://huggingface.co/docs/transformers/quicktour)
 
+[ActiveLoop LangChain & Vector Databases in Production](https://learn.activeloop.ai/courses/langchain)
 
+[OpenAI Platform API](https://platform.openai.com)
+
+[ActiveLoop DataLake](https://app.activeloop.ai)
+
+## Tutorials and documentation
+
+Tutorials and quick intros used
+
+### LangChain tutorials
+
+- [DataCamp](https://www.datacamp.com/tutorial/how-to-build-llm-applications-with-langchain)
+
+- [Langchain Docs](https://python.langchain.com/)
+
+## Tools
+
+- [OLlama](https://ollama.com/download)
 
