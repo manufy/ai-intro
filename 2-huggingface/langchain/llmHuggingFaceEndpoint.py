@@ -2,6 +2,7 @@ from langchain_community.llms import HuggingFaceEndpoint
 from langchain.chains import LLMChain
 from langchain_core.prompts import PromptTemplate
 
+import sys
 import os
 
 repo_id = "mistralai/Mistral-7B-Instruct-v0.2"
@@ -10,13 +11,24 @@ import warnings
 warnings.filterwarnings('ignore', category=UserWarning)
 
 
-# Suprime las advertencias de UserWarning
-with warnings.catch_warnings():
-    warnings.filterwarnings("ignore", category=UserWarning)
+stdout_original = sys.stdout
+stderr_original = sys.stderr
+sys.stdout = open(os.devnull, 'w')
+sys.stderr = open(os.devnull, 'w')
 
+
+try:
     llm = HuggingFaceEndpoint(
-        repo_id=repo_id
+        repo_id=repo_id,
+        temperature=0.5
     )
+finally:
+    # Restaura las salidas estándar y de error originales
+    sys.stdout.close()
+    sys.stdout = stdout_original
+    sys.stderr.close()
+    sys.stderr = stderr_original
+
 
 #llm = HuggingFaceEndpoint(
 #    #repo_id=repo_id, max_length=128, temperature=0.5, token= os.getenv("HUGGINGFACEHUB_API_TOKEN")
@@ -38,10 +50,9 @@ prompt = PromptTemplate.from_template(template)
 # print(llm_chain.invoke(question))
 
 # The class `LLMChain` was deprecated in LangChain 0.1.17 and will be removed in 0.3.0. Use RunnableSequence, e.g., `prompt | llm` instead
+# using RunnableSequence for last langchang version should be:
 
 runnable_sequence = prompt | llm
-
-# Invoke the sequence with the question
 result = runnable_sequence.invoke(question)
 
 print(result)
