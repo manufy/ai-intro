@@ -1,1 +1,1 @@
-conda activate langchain-vector-databases-in-production
+conda activate lvdp

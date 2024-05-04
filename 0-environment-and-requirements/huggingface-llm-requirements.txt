@@ -8,3 +8,7 @@ tensorflow
 # Your currently installed version of Keras is Keras 3, but this is not yet supported in Transformers. 
 # Please install the backwards-compatible tf-keras package with `pip install tf-keras`.
 tf-keras
+flash_attn
+pip install huggingface_hub
+langchain-community
+

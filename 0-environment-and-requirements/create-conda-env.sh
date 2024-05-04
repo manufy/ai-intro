@@ -1,1 +1,1 @@
-conda create --name langchain-vector-databases-in-production
+conda create --name lvdp
