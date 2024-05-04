@@ -4,3 +4,7 @@ evaluate
 accelerate
 torch
 tensorflow
+# this to solve keras exception for tensorflow trainer:
+# Your currently installed version of Keras is Keras 3, but this is not yet supported in Transformers. 
+# Please install the backwards-compatible tf-keras package with `pip install tf-keras`.
+tf-keras

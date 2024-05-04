@@ -1,3 +1,6 @@
+# To solve keras errors pip install tf-keras
+# To disable warnings set TOKENIZERS_PARALLELISM=(true | false)
+
 # You’ll start with a TFPreTrainedModel or a tf.keras.Model:
 
 from transformers import TFAutoModelForSequenceClassification
@@ -31,7 +34,7 @@ tf_dataset = model.prepare_tf_dataset(
 
 # When you’re ready, you can call compile and fit to start training. Note that Transformers models all have a default task-relevant loss function, so you don’t need to specify one unless you want to:
 
-from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam 
 
 model.compile(optimizer='adam')  # No loss argument!
 model.fit(tf_dataset) 
