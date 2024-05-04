@@ -30,12 +30,6 @@ finally:
     sys.stderr = stderr_original
 
 
-#llm = HuggingFaceEndpoint(
-#    #repo_id=repo_id, max_length=128, temperature=0.5, token= os.getenv("HUGGINGFACEHUB_API_TOKEN")
-#    repo_id=repo_id
-#)
-
-
 question = "Who won the FIFA World Cup in the year 1994? "
 
 template = """Question: {question}
