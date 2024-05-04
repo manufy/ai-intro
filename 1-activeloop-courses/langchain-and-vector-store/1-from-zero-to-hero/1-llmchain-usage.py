@@ -51,7 +51,8 @@ print ("---- Output with LLMChain ----")
 chain = LLMChain(llm=llm, prompt=prompt)
 
 # Run the chain only specifying the input variable.
-print(chain.invoke("eco-friendly water bottles")['text'])
+product = "eco-friendly water bottles"
+print(chain.invoke(product)['text'])
 
 
 
@@ -60,6 +61,6 @@ print ("---- Output with RunnableSequence ----")
 runnable_sequence = prompt | llm
 
 # Invoke the sequence with the question
-result = runnable_sequence.invoke(prompt)
+result = runnable_sequence.invoke(product)
 
 print(result)
