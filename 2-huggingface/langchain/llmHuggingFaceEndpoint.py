@@ -2,6 +2,10 @@ from langchain_community.llms import HuggingFaceEndpoint
 from langchain.chains import LLMChain
 from langchain_core.prompts import PromptTemplate
 
+from dotenv import find_dotenv, load_dotenv
+# Load environment variables
+load_dotenv(find_dotenv())
+
 repo_id = "mistralai/Mistral-7B-Instruct-v0.2"
 
 llm = HuggingFaceEndpoint(
