@@ -1,8 +1,9 @@
-from langchain_community.utilities import GoogleSearchAPIWrapper
+from langchain_google_community import GoogleSearchAPIWrapper
 from langchain_core.tools import Tool
 import json
 from termcolor import colored
 
+# pip install -U langchain-google-community
 
 # pip install google-api-python-client
 # API KEY and CUSTOM SEARCH creation https://console.cloud.google.com/apis/dashboard
