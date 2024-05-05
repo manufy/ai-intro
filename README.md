@@ -28,6 +28,17 @@ Ensure to have about 50Gb free for HuggingFace and Ollama model downloads
 
     `environment-and-requirements/install-huggingface-requirements.sh`
 
+- Create a .env file with API keys and credentials
+
+    To be documented later using load_dotenv module
+
+## Deprecation warnings
+
+The most annoying thing is that the activeloop course is using deprecated modules.
+The code will use the updated modules, but still some things needs to be changed to remove all deprecation warnings.
+This depend on third party updates, despite the samples are using latest modules, if a module depends on another module, this can throw a warning because the included module was still not updated at the time of writing this repo
+There are comments on the code to ignore the warnings to have a nice clean output.
+
 ## Courses
 
 - [ActiveLoop LangChain & Vector Databases in Production](https://learn.activeloop.ai/courses/langchain)

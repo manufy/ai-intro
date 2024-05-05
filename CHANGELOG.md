@@ -6,4 +6,6 @@
 
 - Coded HuggingFace quick-tour samples
 
-∫
+0.3 May 5 2024
+
+- Coded OpenAI zero-to-hero 
