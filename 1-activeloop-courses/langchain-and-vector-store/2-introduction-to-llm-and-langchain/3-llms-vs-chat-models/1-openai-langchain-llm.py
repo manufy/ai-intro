@@ -19,3 +19,10 @@ response = chain.invoke({"product":"wireless headphones", "llm": llm, "prompt": 
 from termcolor import colored
 
 print(colored(response, 'yellow'))
+
+
+# As a comparison, here's what LLM and Chat Model APIs look like in LangChain.
+
+# llm_output:  {'product': 'Translate the following text from English to French: Hello, how are you?', 'text': '\n\nBonjour, comment allez-vous?'}
+
+# chat_output:  content='Bonjour, comment ça va ?' additional_kwargs={} example=False

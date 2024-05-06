@@ -45,4 +45,11 @@ print(colored(chat.generate(batch_messages), 'red'))
 
 response = LLMResult(generations=[[ChatGeneration(text="J'aime la programmation.", generation_info=None, message=AIMessage(content="J'aime la programmation.", additional_kwargs={}, example=False))], [ChatGeneration(text='I love programming.', generation_info=None, message=AIMessage(content='I love programming.', additional_kwargs={}, example=False))]], llm_output={'token_usage': {'prompt_tokens': 65, 'completion_tokens': 11, 'total_tokens': 76}, 'model_name': 'gpt-4'})                                                                                                                   
 
-print(colored(response, 'yellow'))                                                                  
+print(colored(response , 'yellow'))        
+
+
+# As a comparison, here's what LLM and Chat Model APIs look like in LangChain.
+
+# llm_output:  {'product': 'Translate the following text from English to French: Hello, how are you?', 'text': '\n\nBonjour, comment allez-vous?'}
+
+# chat_output:  content='Bonjour, comment ça va ?' additional_kwargs={} example=False
