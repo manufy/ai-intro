@@ -1,0 +1,16 @@
+{
+    "name": null,
+    "input_variables": [
+        "animal",
+        "habitat"
+    ],
+    "input_types": {},
+    "output_parser": null,
+    "partial_variables": {},
+    "metadata": null,
+    "tags": null,
+    "template": "\nAnimal: {animal}\nHabitat: {habitat}\n",
+    "template_format": "f-string",
+    "validate_template": false,
+    "_type": "prompt"
+}
