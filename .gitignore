@@ -10,3 +10,4 @@ llama.cpp
 .DS_Store
 *.bin
 deeplake
+old
