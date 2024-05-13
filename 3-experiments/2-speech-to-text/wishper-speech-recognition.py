@@ -98,6 +98,12 @@ input_values = input_values.numpy()
 print(input_values)
 # Usa la pipeline para reconocer el audio
 
+import matplotlib.pyplot as plt
+import librosa.display
+
+plt.figure().set_figwidth(12)
+librosa.display.waveshow(input_values, sr=16000)
+
 print("---- Reconociendo ----")
 
 transcription = pipe(input_values)
