@@ -1,0 +1,5 @@
+os
+requests
+python-dotenv
+
+transformers
