@@ -3,6 +3,7 @@ from dotenv import find_dotenv, load_dotenv
 import os
 import requests
 import streamlit as st
+from PIL import Image
 
 HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -115,47 +116,62 @@ def text2speech(message):
 def main():
 
     try:
-        st.set_page_config(page_title="ManuAI Experiment 1 - Photo Story Teller", page_icon="📸", layout="wide")
-        st.header("ManuAI Experiment 1 - Photo Story Generation and Audio Teller")
+        st.set_page_config(page_title="ManuAI Experiment 1 - Photo Story Teller :sunglasses:", page_icon="📸", layout="wide")
+        st.markdown("*ManuAI* :green[Experiment 1] - :rainbow[Photo Story Generation and Audio Teller] :sunglasses:")
 
-        st.write("Upload a photo and the application will generate a story based on the photo.")
-        st.write("The application uses the Hugging Face API to generate a scenario based on the photo, and then uses the OpenAI API to generate a story based on the scenario.")
-        st.write("The story is then converted usint a TTS model using the Hugging Face inference API to generate the audio.")
+        st.markdown(":tulip: This *demo*  uses the Hugging Face API to generate a scenario / description based on the photo, and then uses the OpenAI API to generate a story based on the scenario.")
+        st.markdown(":cherry_blossom: The story is then converted using a TTS model from the Hugging Face inference API to generate the audio.")
 
-        st.write("Still WIP, this deploy is for demo purposes only.")
+        st.markdown(":rose: :red[**Still WIP, this deploy is for demo purposes only.**]")
+
+        st.markdown("*Streamlit* is **really** ***cool***.")
+        st.markdown('''
+            :red[Streamlit] :orange[can] :green[write] :blue[text] :violet[in]
+            :gray[pretty] :rainbow[colors] and :blue-background[highlight] text.''')
+        st.markdown("Here's a bouquet &mdash;\
+                    :tulip::cherry_blossom::rose::hibiscus::sunflower::blossom:")
+
+        multi = '''If you end a line with two spaces,
+        a soft return is used for the next line.
+
+        Two (or more) newline characters in a row will result in a hard return.
+        '''
+        st.markdown(multi)
     
     
      
 
 
-        uploaded_file = st.file_uploader("Choose a jpg base64 encoded photo...", type="jpg")
+        uploaded_file = st.file_uploader(":hibiscus: Choose a jpg base64 encoded photo...", type="jpg")
         if uploaded_file is not None:
             print("uploaded file")
+            image = Image.open(uploaded_file)
             bytes_data = uploaded_file.getvalue()
-            with open("photo.jpg", "wb") as f:
+            image_name = "photo.jpg"
+            with open(image_name, "wb") as f:
                 f.write(bytes_data) 
             st.image(uploaded_file, caption="Uploaded photo", use_column_width=True)
 
-            with st.spinner(text="Generating IMG2TEXT scenario..."):
-                scenario = img2text(uploaded_file.name)
-            st.success('Scenario generated!')   
+            with st.spinner(text="Generating IMG2TEXT scenario... " + image_name ):
+                scenario = img2text(image_name)
+            st.success(':sunflower: Scenario generated!')   
             
 
             with st.spinner(text="Generating LLM story..."):
                 story = generate_story(scenario)
-            st.success('Story generated!')   
+            st.success(':blossom: Story generated!')   
 
             with st.spinner(text="Generating Audio TTS output..."):
                 text2speech(story)
-            st.success('Audio generated!')   
+            st.success(':tulip: Audio generated!')   
         
-            with st.expander("scenario"):
+            with st.expander(":cherry_blossom: View scenario ... "):
                 st.write(scenario)
-            with st.expander("story"):
+            with st.expander(":rose: View story ..."):
                 st.write(story)  
             st.audio("audio.flac")
-    except:
-         st.error('Some unexpected exception has occurred, remember', icon="🚨")
+    except Exception as e:
+         st.error('Some unexpected exception has occurred, remember this is WIP, go for a beer and try lateer please :)', icon="🚨")
         
 if __name__ == "__main__":
     main()  
