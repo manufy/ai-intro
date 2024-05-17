@@ -121,7 +121,7 @@ def main():
         scenario = img2text(uploaded_file.name)
         st.write("Generating LLM scenario...")
         story = generate_story(scenario)
-         st.write("Audio TTS output...")
+        st.write("Audio TTS output...")
         text2speech(story)
         with st.expander("scenario"):
            st.write(scenario)
