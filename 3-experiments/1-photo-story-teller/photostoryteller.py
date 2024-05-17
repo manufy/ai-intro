@@ -124,25 +124,14 @@ def main():
 
         st.markdown(":rose: :red[**Still WIP, this deploy is for demo purposes only.**]")
 
-        st.markdown("*Streamlit* is **really** ***cool***.")
-        st.markdown('''
-            :red[Streamlit] :orange[can] :green[write] :blue[text] :violet[in]
-            :gray[pretty] :rainbow[colors] and :blue-background[highlight] text.''')
-        st.markdown("Here's a bouquet &mdash;\
-                    :tulip::cherry_blossom::rose::hibiscus::sunflower::blossom:")
-
-        multi = '''If you end a line with two spaces,
-        a soft return is used for the next line.
-
-        Two (or more) newline characters in a row will result in a hard return.
-        '''
-        st.markdown(multi)
+      
+      
     
     
      
 
 
-        uploaded_file = st.file_uploader(":hibiscus: Choose a jpg base64 encoded photo...", type="jpg")
+        uploaded_file = st.file_uploader(":hibiscus: Choose a photo...", type="jpg")
         if uploaded_file is not None:
             print("uploaded file")
             image = Image.open(uploaded_file)
