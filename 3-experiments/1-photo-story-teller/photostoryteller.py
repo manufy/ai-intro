@@ -150,7 +150,7 @@ def main():
             st.success('Audio generated!')   
         
             with st.expander("scenario"):
-            st.write(scenario)
+                st.write(scenario)
             with st.expander("story"):
                 st.write(story)  
             st.audio("audio.flac")
