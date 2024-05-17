@@ -3,7 +3,7 @@ from dotenv import find_dotenv, load_dotenv
 import os
 
 HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
-
+st.write(f"El token es: {HUGGINGFACEHUB_API_TOKEN}")
 
 print("----- setting up log level to error and ignoring user warnings -----")
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
