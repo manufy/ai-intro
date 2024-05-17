@@ -109,6 +109,7 @@ import streamlit as st
 def main():
     st.set_page_config(page_title="Photo Story Teller", page_icon="📸", layout="wide")
     st.header("Photo Story Teller")
+    st.write(HUGGINGFACEHUB_API_TOKEN)
     uploaded_file = st.file_uploader("Choose a photo...", type="jpg")
     if uploaded_file is not None:
         print("uploaded file")
