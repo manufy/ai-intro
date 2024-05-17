@@ -1,5 +1,5 @@
 python-dotenv
-transformers==4.40.1
+transformers
 langchain
 tensorflow
 torch
