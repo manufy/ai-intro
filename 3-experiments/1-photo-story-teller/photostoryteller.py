@@ -7,8 +7,7 @@ import streamlit as st
 HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-st.write(f"El Htoken es: {HUGGINGFACEHUB_API_TOKEN}")
-st.write(f"El Otoken es: {OPENAI_API_KEY}")
+
 
 
 print("----- setting up log level to error and ignoring user warnings -----")
@@ -116,7 +115,8 @@ def text2speech(message):
 def main():
     st.set_page_config(page_title="Photo Story Teller", page_icon="📸", layout="wide")
     st.header("Photo Story Teller")
-   
+    st.write(f"El Htoken es: {HUGGINGFACEHUB_API_TOKEN}")
+    st.write(f"El Otoken es: {OPENAI_API_KEY}")
     uploaded_file = st.file_uploader("Choose a photo...", type="jpg")
     if uploaded_file is not None:
         print("uploaded file")
