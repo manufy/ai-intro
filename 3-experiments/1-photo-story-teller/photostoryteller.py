@@ -1,8 +1,14 @@
 print("----- setting up application -----")
 from dotenv import find_dotenv, load_dotenv
 import os
+import requests
+import streamlit as st
 
 HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+st.write(f"El Htoken es: {HUGGINGFACEHUB_API_TOKEN}")
+st.write(f"El Otoken es: {OPENAI_API_KEY}")
 
 
 print("----- setting up log level to error and ignoring user warnings -----")
@@ -84,11 +90,12 @@ def generate_story(scenario):
 #story=generate_story(scenario)
 ##print(story)
 
-import requests
+
 
 def text2speech(message):
     API_URL = "https://api-inference.huggingface.co/models/espnet/kan-bayashi_ljspeech_vits"
     headers = {"Authorization": f"Bearer {HUGGINGFACEHUB_API_TOKEN}"}
+    st.write(f"llamando a huggingface: {headers}")
     payload = {
 	    "inputs": message
     }
@@ -102,14 +109,14 @@ def text2speech(message):
 #print("----- calling text2speech -----")
 
 #text2speech("hello world")
-import streamlit as st
+
 
 
 
 def main():
     st.set_page_config(page_title="Photo Story Teller", page_icon="📸", layout="wide")
     st.header("Photo Story Teller")
-    st.write(f"El token es: {HUGGINGFACEHUB_API_TOKEN}")
+   
     uploaded_file = st.file_uploader("Choose a photo...", type="jpg")
     if uploaded_file is not None:
         print("uploaded file")
