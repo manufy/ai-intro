@@ -117,8 +117,11 @@ def main():
         with open("photo.jpg", "wb") as f:
             f.write(bytes_data) 
         st.image(uploaded_file, caption="Uploaded photo", use_column_width=True)
+        st.write("Generating IMG2TEXT scenario...")
         scenario = img2text(uploaded_file.name)
+        st.write("Generating LLM scenario...")
         story = generate_story(scenario)
+         st.write("Audio TTS output...")
         text2speech(story)
         with st.expander("scenario"):
            st.write(scenario)
