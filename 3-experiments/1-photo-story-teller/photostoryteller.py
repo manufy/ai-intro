@@ -113,41 +113,49 @@ def text2speech(message):
 
 
 def main():
-    st.set_page_config(page_title="ManuAI Experiment 1 - Photo Story Teller", page_icon="📸", layout="wide")
-    st.header("ManuAI Experiment 1 - Photo Story Generation and Audio Teller")
 
-    st.write("Upload a photo and the application will generate a story based on the photo.")
-    st.write("The application uses the Hugging Face API to generate a scenario based on the photo, and then uses the OpenAI API to generate a story based on the scenario.")
-    st.write("The story is then converted usint a TTS model using the Hugging Face inference API to generate the audio.")
+    try:
+        st.set_page_config(page_title="ManuAI Experiment 1 - Photo Story Teller", page_icon="📸", layout="wide")
+        st.header("ManuAI Experiment 1 - Photo Story Generation and Audio Teller")
 
-    st.write("Still WIP, this deploy is for demo purposes only.")
-   
-    uploaded_file = st.file_uploader("Choose a jpg base64 encoded photo...", type="jpg")
-    if uploaded_file is not None:
-        print("uploaded file")
-        bytes_data = uploaded_file.getvalue()
-        with open("photo.jpg", "wb") as f:
-            f.write(bytes_data) 
-        st.image(uploaded_file, caption="Uploaded photo", use_column_width=True)
+        st.write("Upload a photo and the application will generate a story based on the photo.")
+        st.write("The application uses the Hugging Face API to generate a scenario based on the photo, and then uses the OpenAI API to generate a story based on the scenario.")
+        st.write("The story is then converted usint a TTS model using the Hugging Face inference API to generate the audio.")
 
-        with st.spinner(text="Generating IMG2TEXT scenario..."):
-            scenario = img2text(uploaded_file.name)
-        st.success('Scenario generated!')   
+        st.write("Still WIP, this deploy is for demo purposes only.")
+    
+    
+     
+
+
+        uploaded_file = st.file_uploader("Choose a jpg base64 encoded photo...", type="jpg")
+        if uploaded_file is not None:
+            print("uploaded file")
+            bytes_data = uploaded_file.getvalue()
+            with open("photo.jpg", "wb") as f:
+                f.write(bytes_data) 
+            st.image(uploaded_file, caption="Uploaded photo", use_column_width=True)
+
+            with st.spinner(text="Generating IMG2TEXT scenario..."):
+                scenario = img2text(uploaded_file.name)
+            st.success('Scenario generated!')   
+            
+
+            with st.spinner(text="Generating LLM story..."):
+                story = generate_story(scenario)
+            st.success('Story generated!')   
+
+            with st.spinner(text="Generating Audio TTS output..."):
+                text2speech(story)
+            st.success('Audio generated!')   
         
-
-        with st.spinner(text="Generating LLM story..."):
-            story = generate_story(scenario)
-        st.success('Story generated!')   
-
-        with st.spinner(text="Generating Audio TTS output..."):
-             text2speech(story)
-        st.success('Audio generated!')   
-       
-        with st.expander("scenario"):
-           st.write(scenario)
-        with st.expander("story"):
-            st.write(story)  
-        st.audio("audio.flac")
-
+            with st.expander("scenario"):
+            st.write(scenario)
+            with st.expander("story"):
+                st.write(story)  
+            st.audio("audio.flac")
+    except:
+         st.error('Some unexpected exception has occurred, remember', icon="🚨")
+        
 if __name__ == "__main__":
     main()  
