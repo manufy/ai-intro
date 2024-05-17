@@ -1,0 +1,3 @@
+#!/bin/bash
+export HUGGINGFACEHUB_API_TOKEN="NOTOKEN"
+export OPENAI_API_KEY="NOKEY"

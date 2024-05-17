@@ -94,7 +94,7 @@ def generate_story(scenario):
 def text2speech(message):
     API_URL = "https://api-inference.huggingface.co/models/espnet/kan-bayashi_ljspeech_vits"
     headers = {"Authorization": f"Bearer {HUGGINGFACEHUB_API_TOKEN}"}
-    st.write(f"llamando a huggingface: {headers}")
+    
     payload = {
 	    "inputs": message
     }
@@ -115,8 +115,7 @@ def text2speech(message):
 def main():
     st.set_page_config(page_title="Photo Story Teller", page_icon="📸", layout="wide")
     st.header("Photo Story Teller")
-    st.write(f"El Htoken es: {HUGGINGFACEHUB_API_TOKEN}")
-    st.write(f"El Otoken es: {OPENAI_API_KEY}")
+   
     uploaded_file = st.file_uploader("Choose a photo...", type="jpg")
     if uploaded_file is not None:
         print("uploaded file")
@@ -126,7 +125,7 @@ def main():
         st.image(uploaded_file, caption="Uploaded photo", use_column_width=True)
         st.write("Generating IMG2TEXT scenario...")
         scenario = img2text(uploaded_file.name)
-        st.write("Generating LLM scenario...")
+        st.write("Generating LLM story...")
         story = generate_story(scenario)
         st.write("Audio TTS output...")
         text2speech(story)
