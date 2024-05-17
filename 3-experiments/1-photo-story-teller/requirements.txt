@@ -2,3 +2,4 @@ python-dotenv
 transformers
 langchain
 tensorflow
+pytorch
