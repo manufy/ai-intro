@@ -14,5 +14,6 @@ old
 *.wav
 *.flac
 *.jpg
-photo.jpg
+*photo*
+
 

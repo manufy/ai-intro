@@ -41,16 +41,15 @@ def img2text(url):
 
 # llm
 
-def generate_story(scenario):
+def generate_story2(scenario):
     template = """
     You are a srory teller;
-    You can generate a short story based on a simple narrative,
-    the story should be no more than 20 words; 
-
-    CONTEXT: {scenario}
-    STORY:
+    You should generate a short story based on  {scenario};
+    the story should be no more than 20 words;
     """
     prompt = PromptTemplate(template=template, input_variables=["scenario"])
+    
+    print(prompt)
 
     #story_llm = LLMChain(llm="gpt2", max_length=20, prompt=prompt, verbose=True)
     #gpt2_model = GPT2LanguageModel() 
@@ -89,6 +88,46 @@ def generate_story(scenario):
 #print ("----- llm story output -----")
 #story=generate_story(scenario)
 ##print(story)
+
+
+def generate_story(scenario):
+    # Define the prompt template
+    template = """
+    You are a storyteller. Write a short story based on the following scenario:
+    Scenario: {scenario}
+    The story should be no more than 20 words.
+    """
+    # Format the prompt with the scenario
+    prompt = template.format(scenario=scenario)
+    
+    # Load the tokenizer and model
+    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+    model = GPT2LMHeadModel.from_pretrained("gpt2")
+
+    # Set up text generation pipeline
+    generator = TextGenerationPipeline(model=model, tokenizer=tokenizer)
+
+    # Generate the story
+    
+    prompt = f"Scenario: {scenario}\nWrite a short story in less than 20 words."
+
+    
+    story = generator(
+        prompt,
+        max_new_tokens=20,  # Limit the new tokens generated to 20 words
+        truncation=True,
+        num_return_sequences=1,
+        return_full_text=False,
+        temperature=0.7,  # Adjust the creativity of the output
+        top_p=0.9,  # Nucleus sampling
+        top_k=50  # Top-k sampling
+    )[0]['generated_text']
+    
+    # Remove the prompt part from the output if necessary
+    story = story.replace(prompt, "").strip()
+
+    # Return the generated story, ensuring it is stripped of leading/trailing whitespace
+    return story.strip()
 
 
 
@@ -135,14 +174,11 @@ def main():
         if uploaded_file is not None:
             print("uploaded file")
             image = Image.open(uploaded_file)
-            bytes_data = uploaded_file.getvalue()
-            image_name = "photo.jpg"
-            with open(image_name, "wb") as f:
-                f.write(bytes_data) 
+
             st.image(uploaded_file, caption="Uploaded photo", use_column_width=True)
 
-            with st.spinner(text="Generating IMG2TEXT scenario... " + image_name ):
-                scenario = img2text(image_name)
+            with st.spinner(text="Generating IMG2TEXT scenario... " + uploaded_file.name ):
+                scenario = img2text(image)
             st.success(':sunflower: Scenario generated!')   
             
 
@@ -161,6 +197,6 @@ def main():
             st.audio("audio.flac")
     except Exception as e:
          st.error('Some unexpected exception has occurred, remember this is WIP, go for a beer and try lateer please :)', icon="🚨")
-        
+         st.error(e)
 if __name__ == "__main__":
     main()  
