@@ -11,3 +11,8 @@ llama.cpp
 *.bin
 deeplake
 old
+*.wav
+*.flac
+*.jpg
+photo.jpg
+
