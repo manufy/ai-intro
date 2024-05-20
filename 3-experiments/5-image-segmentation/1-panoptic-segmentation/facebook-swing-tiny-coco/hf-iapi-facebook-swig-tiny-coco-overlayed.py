@@ -9,7 +9,6 @@ import io
 import random
 import numpy as np
 
-# Load environment variables
 load_dotenv(find_dotenv())
 HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
