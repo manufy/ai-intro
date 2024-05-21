@@ -1,112 +1,102 @@
 import gradio as gr
-from PIL import Image, ImageDraw, ImageFont
 import requests
-
-# imprime un texto en el centro de una imagen en negro por defecto
-
-def print_text_on_image_centered(image, text, color="black"):
-    # Crea un objeto Draw para la imagen
-    draw = ImageDraw.Draw(image)
-    
-    
-     # Define el tamaño inicial de la fuente
-    font_size = 30
-    font = ImageFont.load_default().font_variant(size=font_size)
-    
-    # Calcula las dimensiones del texto
-    text_bbox = draw.textbbox((0, 0), text, font=font)
-    text_width = text_bbox[2] - text_bbox[0]
-    text_height = text_bbox[3] - text_bbox[1]
-    
-    # Reduce el tamaño de la fuente hasta que el texto se ajuste dentro de la imagen
-    while text_width > image.width:
-        font_size -= 1
-        font = ImageFont.load_default().font_variant(size=font_size)
-        text_bbox = draw.textbbox((0, 0), text, font=font)
-        text_width = text_bbox[2] - text_bbox[0]
-    
-    # Calcula la posición del texto
-    text_x = (image.width - text_width) / 2
-    text_y = (image.height - text_height) / 2
-    
-    # Dibuja el texto en la imagen
-    draw.text((text_x, text_y), text, font=font, fill=color)
-    return image
-
-# Crea una imagen en blanco por defecto
-
-def create_background_image(width, height, color="white"):
-    return Image.new("RGB", (width, height), color)
-    
-
-
-
-# Valida el token de la API de Hugging Face contra su API whoami-v2
-
-def hf_validate_api_token(api_token):
-    
-    # Define la URL de la API
-    url = "https://huggingface.co/api/whoami-v2"
-
-    # Define los encabezados de la solicitud
-    headers = {
-        "Authorization": f"Bearer {api_token}"
-    }
-
-    # Realiza la solicitud a la API
-    response = requests.get(url, headers=headers)
-    print(response.content)
-
-    # Si la respuesta tiene un código de estado 200, el token es válido
-    if response.status_code == 200:
-        return True, response.json()['fullname']
-    else:
-        return False, response.json()['error']
+from image_utils import print_text_on_image_centered, create_background_image
+from hf_utils import hf_validate_api_token
+from segmentation_utils import segment_and_overlay_results
 
 def segment_gradio_image(api_token, model, image):
-    print("api_token: " + api_token)
-    is_token_valid, result = hf_validate_api_token(api_token)
-    print("is_token_valid: " + str(is_token_valid))
-    print("result: " + str(result))
-    if is_token_valid == False:
-        text_image = print_text_on_image_centered(create_background_image(500, 500, "white"), 'HuggingFace API Token invalid. Please enter a valid token.', 'red')
+    
+    # Validacion del token y la imagen
+    
+    is_token_valid, api_token_message = hf_validate_api_token(api_token)
+    if not is_token_valid:
+        text_image = print_text_on_image_centered(
+            create_background_image(500, 500, "white"),
+            'HuggingFace API Token invalid. Please enter a valid token.',
+            'red'
+        )
+        segments_list = "No segments available."
     else:
-        text_image = print_text_on_image_centered(create_background_image(500, 500, "white"), 'PROCESANDO', 'blue')
-  
-    #response = segment_image(image)
-    # Crea una imagen en blanco de 500x500 píxeles
+        if image is None:
+            text_image = print_text_on_image_centered(
+                create_background_image(500, 500, "white"),
+                'No image detected',
+                'orange'
+            )
+            segments_list = "No segments available."
+        else:
+            text_image = print_text_on_image_centered(
+                create_background_image(500, 500, "white"),
+                'PROCESANDO',
+                'blue'
+            )
+            segments_list = "No segments available."
+            # Assuming segment_image is a placeholder for actual segmentation function
+            # Uncomment and modify this part according to your segmentation implementation
+            # response = segment_image(api_token, model, image)
+            # text_image = response["segmented_image"]
+            
+            text_image, segments = segment_and_overlay_results(image,api_token, model)
+            print("app.py segment_gradio_image")
+            segments_list = "Segments:\n"
+            for segment in segments:
+                print(segment['label'] + " " + str(segment['score']))
+                segments_list += f"\n{segment['label']}: {segment['score']}"
+           
     
-    
-    
-    
-    return text_image
+    return api_token_message, text_image, segments_list
 
-# Create the Gradio interface
-interface = gr.Interface(
-    fn=segment_gradio_image, 
-    inputs=[
-        gr.Textbox(
+
+
+with gr.Blocks() as demo:
+    gr.Markdown("# Segment Image")
+    gr.Markdown("Upload an image and let the model segment it.")
+    
+    with gr.Row():
+        api_token = gr.Textbox(
             label="API Token", 
             placeholder="Enter your Hugging Face API token here"
-            
-        ), 
-        gr.Textbox(
-            label="AI Segmentation model", 
+        )
+        model_name = gr.Textbox(
+            label="AI Segmentation Model", 
             placeholder="Enter your Segmentation model here",
             value="facebook/mask2former-swin-tiny-coco-panoptic"
-            
-        ), 
-        "image"
-    ],
-    outputs="image",
-    live=True,
-    title="Segment Image",
-    description="Upload an image and let the model segment it.",
-    allow_flagging=False,
-    examples=[
-        ["", "https://api-inference.huggingface.co/models/facebook/mask2former-swin-tiny-coco-panoptic"]
-    ]
-)
+        )
+    
+    image_input = gr.Image(label="Upload Image")
+    
+    with gr.Row():
+        api_token_validation = gr.Textbox(label="API Token Validation")
+        segmented_image = gr.Image(label="Segmented Image")
+        
+    # New block for segments output
+    
+    with gr.Row():
+        segments_output = gr.Textbox(label="Segments")
+        
+    examples = gr.Examples(
+        examples=[
+            ["Your HF API Token", "facebook/mask2former-swin-tiny-coco-panoptic", "https://upload.wikimedia.org/wikipedia/commons/7/74/A-Cat.jpg"]
+        ],
+        inputs=[api_token, model_name, image_input]
+    )
+    
+    api_token.change(
+        fn=segment_gradio_image, 
+        inputs=[api_token, model_name, image_input], 
+        outputs=[api_token_validation, segmented_image, segments_output]
+    )
 
-# Launch the interface
-interface.launch()
+    model_name.change(
+        fn=segment_gradio_image, 
+        inputs=[api_token, model_name, image_input], 
+        outputs=[api_token_validation, segmented_image, segments_output]
+    )
+
+    image_input.change(
+        fn=segment_gradio_image, 
+        inputs=[api_token, model_name, image_input], 
+        outputs=[api_token_validation, segmented_image, segments_output]
+    )
+
+demo.launch()
