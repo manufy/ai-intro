@@ -365,7 +365,7 @@ def segment_and_overlay_results(image_path, api_token, model):
         print(traceback.format_exc())
         processed_image = print_text_on_image_centered(
                     create_background_image(500, 500, "white"),
-                    e,
+                    str(e),
                     'green'
                 )
         segments = []
