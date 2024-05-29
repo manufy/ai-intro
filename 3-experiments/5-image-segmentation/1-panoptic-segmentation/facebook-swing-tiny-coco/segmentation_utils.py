@@ -12,6 +12,7 @@ from image_utils import print_text_on_image_centered, create_background_image
 from icecream import ic
 import traceback
 from pprint import pprint
+import pyheif
 
 
 
