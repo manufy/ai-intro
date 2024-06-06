@@ -1,0 +1,3 @@
+#brew install ffmpeg
+ yt_dlp
+openai-whisper
