@@ -16,7 +16,7 @@ human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)
 
 chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt])
 
-response = chat(chat_prompt.format_prompt(movie_title="Inception").to_messages())
+response = chat(chat_prompt.prompt = "may the {subject} be with you" chat_message_prompt=ChatMessagePromptTemplate(role="jedi", template=prompt) ¿ es correcto ?(movie_title="Inception").to_messages())
 
 from termcolor import colored
 
