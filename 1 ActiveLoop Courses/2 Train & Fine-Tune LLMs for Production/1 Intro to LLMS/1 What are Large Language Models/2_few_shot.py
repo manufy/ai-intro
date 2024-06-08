@@ -1,3 +1,8 @@
+# Few-shot learning in the context of LLMs refers to providing the model 
+# with a few examples before making predictions. 
+# These examples "teach" the model how to reason and act
+# as "filters" to help the model search for relevant patterns in the dataset.
+
 
 import os
 import openai
