@@ -1,0 +1,4 @@
+langchain==0.1.4
+deeplake
+openai==1.10.0
+tiktoken
