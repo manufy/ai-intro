@@ -1,0 +1,36 @@
+{
+    "input": "Tell me about the history of the Internet.",
+    "history": [
+        {
+            "lc": 1,
+            "type": "constructor",
+            "id": [
+                "langchain",
+                "schema",
+                "messages",
+                "HumanMessage"
+            ],
+            "kwargs": {
+                "content": "Tell me about the history of the Internet.",
+                "type": "human"
+            }
+        },
+        {
+            "lc": 1,
+            "type": "constructor",
+            "id": [
+                "langchain",
+                "schema",
+                "messages",
+                "AIMessage"
+            ],
+            "kwargs": {
+                "content": " \n\nAI: The Internet, also known as the World Wide Web, has a rich and complex history. It began as a project in the late 1960s by the United States Department of Defense, with the goal of creating a decentralized network that could withstand a nuclear attack. This project, called ARPANET, was the precursor to the modern Internet.\n\nIn the 1980s, the development of the TCP/IP protocol allowed for multiple networks to be connected, leading to the creation of the Internet as we know it today. The 1990s saw a surge in the popularity of the Internet, with the introduction of the World Wide Web and the first web browser, allowing for easy access to information and communication.\n\nThe early 2000s saw the rise of social media and e-commerce, further expanding the capabilities and reach of the Internet. Today, the Internet is an integral part of our daily lives, connecting people and information from all corners of the globe. Its history is constantly evolving as new technologies and innovations continue to shape its future.",
+                "type": "ai",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            }
+        }
+    ],
+    "response": " \n\nAI: The Internet, also known as the World Wide Web, has a rich and complex history. It began as a project in the late 1960s by the United States Department of Defense, with the goal of creating a decentralized network that could withstand a nuclear attack. This project, called ARPANET, was the precursor to the modern Internet.\n\nIn the 1980s, the development of the TCP/IP protocol allowed for multiple networks to be connected, leading to the creation of the Internet as we know it today. The 1990s saw a surge in the popularity of the Internet, with the introduction of the World Wide Web and the first web browser, allowing for easy access to information and communication.\n\nThe early 2000s saw the rise of social media and e-commerce, further expanding the capabilities and reach of the Internet. Today, the Internet is an integral part of our daily lives, connecting people and information from all corners of the globe. Its history is constantly evolving as new technologies and innovations continue to shape its future."
+}

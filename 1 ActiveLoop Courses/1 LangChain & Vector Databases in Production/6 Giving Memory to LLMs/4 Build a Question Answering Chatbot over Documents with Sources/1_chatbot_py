@@ -1,0 +1,114 @@
+
+import requests
+from newspaper import Article # https://github.com/codelucas/newspaper
+import time
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36'
+}
+
+article_urls = [
+    "https://www.artificialintelligence-news.com/2023/05/16/openai-ceo-ai-regulation-is-essential/",
+    "https://www.artificialintelligence-news.com/2023/05/15/jay-migliaccio-ibm-watson-on-leveraging-ai-to-improve-productivity/",
+    "https://www.artificialintelligence-news.com/2023/05/15/iurii-milovanov-softserve-how-ai-ml-is-helping-boost-innovation-and-personalisation/",
+    "https://www.artificialintelligence-news.com/2023/05/11/ai-and-big-data-expo-north-america-begins-in-less-than-one-week/",
+    "https://www.artificialintelligence-news.com/2023/05/02/ai-godfather-warns-dangers-and-quits-google/",
+    "https://www.artificialintelligence-news.com/2023/04/28/palantir-demos-how-ai-can-used-military/"
+]
+
+session = requests.Session()
+pages_content = [] # where we save the scraped articles
+
+for url in article_urls:
+    try:
+        time.sleep(2) # sleep two seconds for gentle scraping
+        response = session.get(url, headers=headers, timeout=10)
+
+        if response.status_code == 200:
+            article = Article(url)
+            article.download() # download HTML of webpage
+            article.parse() # parse HTML to extract the article text
+            pages_content.append({ "url": url, "text": article.text })
+        else:
+            print(f"Failed to fetch article at {url}")
+    except Exception as e:
+        print(f"Error occurred while fetching article at {url}: {e}")
+
+#If an error occurs while fetching an article, we catch the exception and print
+#an error message. This ensures that even if one article fails to download,
+#the rest of the articles can still be processed.
+
+
+
+
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import DeepLake
+
+embeddings = OpenAIEmbeddings(model="text-embedding-ada-002")
+
+# TODO: use your organization id here. (by default, org id is your username)
+import os
+my_activeloop_org_id = os.environ["ACTIVELOOP_ORG_ID"]
+my_activeloop_dataset_name = "langchain_course_qabot_with_source"
+dataset_path = f"hub://{my_activeloop_org_id}/{my_activeloop_dataset_name}"
+
+db = DeepLake(dataset_path=dataset_path, embedding_function=embeddings)
+
+
+
+
+
+# We split the article texts into small chunks. While doing so, we keep track of each
+# chunk metadata (i.e. the URL where it comes from). Each metadata is a dictionary and
+# we need to use the "source" key for the document source so that we can then use the
+# RetrievalQAWithSourcesChain class which will automatically retrieve the "source" item
+# from the metadata dictionary.
+
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+
+all_texts, all_metadatas = [], []
+for d in pages_content:
+    chunks = text_splitter.split_text(d["text"])
+    for chunk in chunks:
+        all_texts.append(chunk)
+        all_metadatas.append({ "source": d["url"] })
+        
+        
+        
+        
+
+# we add all the chunks to the deep lake, along with their metadata
+db.add_texts(all_texts, all_metadatas)
+
+
+
+# we create a RetrievalQAWithSourcesChain chain, which is very similar to a
+# standard retrieval QA chain but it also keeps track of the sources of the
+# retrieved documents
+
+from langchain.chains import RetrievalQAWithSourcesChain
+from langchain_openai import OpenAI
+
+llm = OpenAI(model_name="gpt-3.5-turbo-instruct", temperature=0)
+
+chain = RetrievalQAWithSourcesChain.from_chain_type(llm=llm,
+                                                    chain_type="stuff",
+                                                    retriever=db.as_retriever())
+
+
+
+# We generate a response to a query using the chain. The response object is a dictionary containing
+# an "answer" field with the textual answer to the query, and a "sources" field containing a string made
+# of the concatenation of the metadata["source"] strings of the retrieved documents.
+d_response = chain({"question": "What does Geoffrey Hinton think about recent trends in AI?"})
+
+print("Response:")
+print(d_response["answer"])
+print("Sources:")
+for source in d_response["sources"].split(", "):
+    print("- " + source)
+    
+    
+    
