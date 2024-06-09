@@ -18,5 +18,8 @@ old
 *.png
 *.pdf
 *.mp4
+VectorDB/chroma
+onnxruntime*
+
 
 

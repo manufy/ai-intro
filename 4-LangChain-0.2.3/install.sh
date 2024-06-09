@@ -6,3 +6,7 @@ pip install langgraph
 pip install "langserve[all]"
 pip install langchain-cli
 pip install langsmith
+pip install langchain-chroma
+
+
+pip install bs4
