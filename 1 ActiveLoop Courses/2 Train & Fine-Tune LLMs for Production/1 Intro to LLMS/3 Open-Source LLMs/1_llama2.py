@@ -2,9 +2,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
 # download model
-model_id = "meta-llama/Llama-2-7b-chat-hf"
+#model_id = "meta-llama/Llama-2-7b-chat-hf"
 #model_id = "tiiuae/falcon-7b-instruct"
-#model_id = "databricks/dolly-v2-3b"
+model_id = "databricks/dolly-v2-3b"
 
 #tokenizer = AutoTokenizer.from_pretrained(model_id, cache_dir="cache")
 tokenizer = AutoTokenizer.from_pretrained(model_id)
